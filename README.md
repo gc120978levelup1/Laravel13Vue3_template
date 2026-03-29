@@ -1,5 +1,6 @@
 # Laravel13Vue3_template
 Template for Laravel 13 + Vue3
+Note: Run the CLI command in a Bash Shell like git bash shell
 
 ________________________________________________________
 
