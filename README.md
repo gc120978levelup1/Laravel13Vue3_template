@@ -17,6 +17,7 @@ cd Laravel13Vue3_template
 docker ps -aq | xargs docker stop | xargs docker rm
 docker system prune -f
 cd Serverss
+cp -r -a ./.env ../
 ./ss up
 cd ..
 ```
