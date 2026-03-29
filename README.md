@@ -35,6 +35,10 @@ ________________________________________________________
 composer install
 npm install
 npm run build
+composer require league/flysystem-aws-s3-v3 "^3.0" --with-all-dependencies
+composer require laravel/wayfinder
+php artisan key:generate
+php artisan storage:link
 php artisan migrate
 ```
 
