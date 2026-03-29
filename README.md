@@ -30,7 +30,6 @@ ________________________________________________________
 composer install
 npm install
 npm run build
-copy .env.example .env
 php artisan migrate
 ```
 
