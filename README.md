@@ -4,6 +4,11 @@ Note: Run the CLI command in a Bash Shell like git bash shell
 
 ________________________________________________________
 
+### Install Docker Desktop
+[https://docs.docker.com/desktop/setup/install/windows-install/]
+
+________________________________________________________
+
 ### Clone this project
 ```sh
 git clone --recursive https://github.com/gc120978levelup1/Laravel13Vue3_template.git
