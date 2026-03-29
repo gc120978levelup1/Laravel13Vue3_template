@@ -14,6 +14,7 @@ ________________________________________________________
 Run Docker Desktop first before running the command below
 ```sh
 cd Laravel13Vue3_template
+copy .env.example Serverss/.env
 docker ps -aq | xargs docker stop | xargs docker rm
 docker system prune -f
 cd Serverss
