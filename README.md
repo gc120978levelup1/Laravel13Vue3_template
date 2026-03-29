@@ -13,6 +13,8 @@ ________________________________________________________
 ### Run Docker Container Servers
 Run Docker Desktop first before running the command below
 ```sh
+docker ps -aq | xargs docker stop | xargs docker rm
+docker system prune -f
 cd Serverss
 ./ss up
 cd ..
@@ -24,6 +26,7 @@ ________________________________________________________
 ```sh
 composer install
 npm install
+npm run build
 copy .env.example .env
 php artisan migrate
 ```
