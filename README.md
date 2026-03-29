@@ -13,7 +13,7 @@ ________________________________________________________
 ### Run Docker Container Servers
 Run Docker Desktop first before running the command below
 ```sh
-cd ss_LAMP_Docker
+cd Serverss
 ./ss up
 cd ..
 ```
