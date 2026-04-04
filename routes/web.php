@@ -25,4 +25,19 @@ Route::middleware('auth')->group(function () {
   Route::get ('/complaint/{complaint}/show', [ComplaintController::class, 'show'])->name('complaint.show');
 });
 
+use App\Http\Controllers\MapController;
+Route::middleware('auth')->group(function () {
+  Route::get ('/map', [MapController::class, 'index'])->name('map.index');
+});
+
+use App\Http\Controllers\CustomerController;
+Route::middleware('auth')->group(function () {
+  Route::get ('/customer', [CustomerController::class, 'index'])->name('customer.index');
+  Route::get ('/customer/create', [CustomerController::class, 'create'])->name('customer.create');
+  Route::post('/customer/post', [CustomerController::class, 'store'])->name('customer.post');
+  Route::get ('/customer/{customer}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
+  Route::post('/customer/{customer}/update', [CustomerController::class, 'update'])->name('customer.update');
+  Route::get ('/customer/{customer}/show', [CustomerController::class, 'show'])->name('customer.show');
+});
+
 require __DIR__.'/settings.php';

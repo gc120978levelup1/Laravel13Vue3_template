@@ -14,7 +14,7 @@ const { isMobile, state, toggleSidebar } = useSidebar()
 
 <template>
     <Button data-sidebar="trigger" data-slot="sidebar-trigger" variant="ghost" size="icon"
-        :class="cn(' h-11 w-11 rounded-full border', props.class)" @click="toggleSidebar">
+        :class="cn(' h-8 w-8 rounded-full border', props.class)" @click="toggleSidebar">
         <div v-if="isMobile || state === 'collapsed'">
             <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none"
                 stroke="#867ef7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
