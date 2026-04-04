@@ -1,12 +1,11 @@
 <!-- eslint-disable import/order -->
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 //------------------------------------------------------------basic ui comps frm shadcn
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 //------------------------------------------------------------routed
 //import { template, dashboard } from '@/routes';
 // eslint-disable-next-line vue/no-dupe-keys
@@ -121,96 +120,6 @@ const file_base643 = ref("");// other picture 1
 const file_base644 = ref("");// other picture 2
 const file_base645 = ref("");// other picture 3
 
-const file_change = (data) => { // drivers licnese
-    file_base64.value = URL.createObjectURL(data.target.files[0]);
-    form.value.license_image = data.target.files[0];
-}
-
-const file_change2 = (data) => { // other id
-    file_base642.value = URL.createObjectURL(data.target.files[0]);
-    form.value.govt_id_image = data.target.files[0];
-}
-
-const file_change1 = (data) => { // portrait photo
-    file_base641.value = URL.createObjectURL(data.target.files[0]);
-    form.value.portrait_image = data.target.files[0];
-}
-
-const file_change3 = (data) => { // other picture 1
-    file_base643.value = URL.createObjectURL(data.target.files[0]);
-    form.value.pic1_image = data.target.files[0];
-}
-
-const file_change4 = (data) => { // other picture 2
-    file_base644.value = URL.createObjectURL(data.target.files[0]);
-    form.value.pic2_image = data.target.files[0];
-}
-
-const file_change5 = (data) => { // other picture 3
-    file_base645.value = URL.createObjectURL(data.target.files[0]);
-    form.value.pic3_image = data.target.files[0];
-}
-
-//--------------------------------------------------------------------------- dialog
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog';
-
-// --------------------------------------------------------------------------- simple-vue-camera
-import SimpleVueCamera from 'simple-vue-camera';
-const camera = ref(null);  // drivers licnese
-const camera2 = ref(null); // other id
-const camera1 = ref(null); // portrait photo
-const camera3 = ref(null); // other picture 1
-const camera4 = ref(null); // other picture 2
-const camera5 = ref(null); // other picture 3
-
-const takePhoto = async () => { // drivers license
-    const blob = await camera.value?.snapshot();
-    file_base64.value = URL.createObjectURL(blob);
-    form.value.license_image = new File([blob], "myimage12345-0.png", { type: blob.type, lastModified: Date.now() });
-};
-
-const takePhoto2 = async () => { // other id
-    const blob = await camera2.value?.snapshot();
-    file_base642.value = URL.createObjectURL(blob);
-    form.value.govt_id_image = new File([blob], "myimage12345-1.png", { type: blob.type, lastModified: Date.now() });
-};
-
-const takePhoto1 = async () => { // portrait photo
-    const blob = await camera1.value?.snapshot();
-    file_base641.value = URL.createObjectURL(blob);
-    form.value.portrait_image = new File([blob], "myimage12345-2.png", { type: blob.type, lastModified: Date.now() });
-};
-
-const takePhoto3 = async () => { // other picture 1
-    const blob = await camera3.value?.snapshot();
-    file_base643.value = URL.createObjectURL(blob);
-    form.value.pic1_image = new File([blob], "myimage12345-3.png", { type: blob.type, lastModified: Date.now() });
-};
-
-const takePhoto4 = async () => { // other picture 2
-    const blob = await camera4.value?.snapshot();
-    file_base644.value = URL.createObjectURL(blob);
-    form.value.pic2_image = new File([blob], "myimage12345-4.png", { type: blob.type, lastModified: Date.now() });
-};
-
-const takePhoto5 = async () => { // other picture 3
-    const blob = await camera5.value?.snapshot();
-    file_base645.value = URL.createObjectURL(blob);
-    form.value.pic3_image = new File([blob], "myimage12345-5.png", { type: blob.type, lastModified: Date.now() });
-};
-
-// --------------------------------------------------------------------------- declaration of some other refs
-const number1 = ref(50);
-
 </script>
 
 <template>
@@ -289,12 +198,6 @@ const number1 = ref(50);
             <div class="flex flex-col lg:flex-row gap-6">
                 Driver's License
                 <div class="lg:w-[65%] flex flex-col gap-2 mb-0 border-2 rounded-xl min-w-72 overflow-hidden">
-                    <div class="flex flex-row h-[10px] item-center">
-                        Brightness<Input type="range" v-model="number1" class="h-[8px]" />
-                    </div>
-                    <div class="flex flex-row h-[10px] item-center">
-                        Scale<Input type="range" v-model="number2" class="h-[8px]" />
-                    </div>
                     <img :src="file_base64" alt="x" style="object-fit: cover; margin: auto;  height: 100%;" />
                 </div>
                 <div class="lg:w-[35%]">

@@ -117,7 +117,7 @@ const onQRCodeScanResult = (data: Result | undefined) => {
 const search_filter = ref("");
 const search_filter_clicked = () => {
     const form_payload = useForm({
-        accountnumber: search_filter.value,
+        name: search_filter.value,
     });
     // ajax call
     form_payload.get(customer.index({ name: search_filter.value }).url, { //------------------------- force ajax parameter
@@ -317,7 +317,7 @@ const new_item = () => {
                         :key="index">
                         <td class="p-2">{{ item.id }}</td>
                         <td class="p-2">{{ item.created_at.replace(".000000Z", "").replace("T", " ") }}</td>
-                        <td class="p-0 lg:w-50">
+                        <td class="p-1 lg:w-50">
                             <img :src="item.portrait_link" alt="x" width="400" style="object-fit: cover; margin: auto;  width: 500px;" />
                         </td>
                         <td class="p-4">{{ item.name }}</td>
