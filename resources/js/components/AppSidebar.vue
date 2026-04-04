@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-vue-next';
+import { Users, BookOpen, FolderGit2, LayoutGrid, BookDashed, Command, MapPinned } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -15,6 +15,9 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard, template } from '@/routes';
+import complaint from '@/routes/complaint';
+import customer from '@/routes/customer';
+import map from '@/routes/map';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -26,7 +29,22 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Template',
         href: template(),
-        icon: LayoutGrid,
+        icon: BookDashed,
+    },
+    {
+        title: 'Map',
+        href: map.index(),
+        icon: MapPinned,
+    },
+    {
+        title: 'Complaint',
+        href: complaint.index(),
+        icon: Command,
+    },
+    {
+        title: 'Customer',
+        href: customer.index(),
+        icon: Users,
     },
 ];
 

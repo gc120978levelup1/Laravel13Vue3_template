@@ -17,15 +17,15 @@ class ComplaintController extends Controller
      */
     public function index(StoreComplaintRequest $request)
     {
-        if ($request["accountnumber"]) { // if index has search parameter
-            $complaint = Complaint::where("accountnumber","like","%". $request["accountnumber"] ."%")->get();
+        if ($request["accountnumber"] && ($request["accountnumber"]!="")) { // if index has search parameter
+            $complaint = Complaint::where("accountnumber", "like", "%" . $request["accountnumber"] . "%")->paginate(2000);
             return Inertia::render('viewjs/complaint/index', [
                 'complaints' => $complaint,
                 'accountnumber' => $request["accountnumber"],
             ]);
         } else // if index has no search parameter
             return Inertia::render('viewjs/complaint/index', [
-                'complaints' => Complaint::get()
+                'complaints' => Complaint::paginate(3)
             ]);
     }
 
@@ -42,8 +42,8 @@ class ComplaintController extends Controller
      */
     public function store(StoreComplaintRequest $request)
     {
-         // saving and extracting uploaed picture
-         if ($request->hasFile('image_file')) {
+        // saving and extracting uploaed picture
+        if ($request->hasFile('image_file')) {
             $request->merge([
                 // local file upload, VPS
                 'picture' => config('alphaenvironment.LOCAL_URL') . $request->file('image_file')->store(config('alphaenvironment.SUB_FLDR_IMAGES'), 'public'),

@@ -16,6 +16,23 @@ git clone --recursive https://github.com/gc120978levelup1/Laravel13Vue3_template
 
 ________________________________________________________
 
+### Modify PhP.ini
+```sh
+upload_max_filesize = 512M
+post_max_size = 512M
+memory_limit = 512M
+```
+
+________________________________________________________
+
+### Modify public/.htaccess
+```sh
+php_value upload_max_filesize 512M
+php_value post_max_size 512M
+```
+
+________________________________________________________
+
 ### Run Docker Container Servers
 Run Docker Desktop first before running the command below
 ```sh

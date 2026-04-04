@@ -1,7 +1,6 @@
 <?php
 return [
     'LOCAL_URL' => '/storage/',
-
     'AWS_URL1' => 'https://fls-9eaa2509-0ce6-4f12-a40a-e4d4a34152c3.laravel.cloud/',
     'AWS_URL2' => 'https://url2.company2.cloud/',
     'AWS_URL3' => 'https://url3.company3.cloud/',
