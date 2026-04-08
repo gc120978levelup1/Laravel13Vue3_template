@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
   Route::post('/customer/post', [CustomerController::class, 'store'])->name('customer.post');
   Route::get ('/customer/{customer}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
   Route::post('/customer/{customer}/update', [CustomerController::class, 'update'])->name('customer.update');
+  Route::post('/customer/{customer}/update_ajax', [CustomerController::class, 'update_ajax'])->name('customer.update_ajax');
   Route::get ('/customer/{customer}/show', [CustomerController::class, 'show'])->name('customer.show');
 });
 

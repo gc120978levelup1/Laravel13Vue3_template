@@ -163,8 +163,7 @@ const file_base645 = ref("");// other picture 3
 
             <!-- Activity Progress Indicator-->
             <div class="flex flex-row gap-2 p-2 lg:gap-6 lg:p-6 bg w-full justify-center border overflow-hidden">
-                <div
-                class="w-full border-t-4 text-mauve-200 dark:text-mauve-800 text-center">
+                <div class="w-full border-t-4 text-mauve-200 dark:text-mauve-800 text-center">
                     Registration
                 </div>
                 <div
@@ -183,11 +182,9 @@ const file_base645 = ref("");// other picture 3
             <div class="flex gap-4 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-user-round-plus-icon lucide-user-round-plus">
-                    <path d="M2 21a8 8 0 0 1 13.292-6" />
-                    <circle cx="10" cy="8" r="5" />
-                    <path d="M19 16v6" />
-                    <path d="M22 19h-6" />
+                    class="lucide lucide-user-round-icon lucide-user-round">
+                    <circle cx="12" cy="8" r="5" />
+                    <path d="M20 21a8 8 0 0 0-16 0" />
                 </svg>
                 <span class="lg:text-2xl font-semibold">
                     View Customer # {{ form.id }}
@@ -203,11 +200,12 @@ const file_base645 = ref("");// other picture 3
                 <div class="lg:w-[35%]">
                     <div class="w-full flex flex-col gap-2 mb-6">
                         <Label class="font-bold" for="license_id">License ID:</Label>
-                        <Input readonly type="text" name="license_id" placeholder="ex. 90784389734789" v-model="form.license_id_no" />
+                        <Input readonly type="text" name="license_id" placeholder="ex. 90784389734789"
+                            v-model="form.license_id_no" />
                     </div>
                     <div class="w-full flex flex-col gap-2 mb-6">
                         <Label class="font-bold" for="license_id_expiry_date">License Expiry Date</Label>
-                        <Input readonly type="date" name="license_id_expiry_date" v-model="form.license_expity_date" />
+                        <Input readonly type="text" name="license_id_expiry_date" v-model="form.license_expity_date" />
                     </div>
                 </div>
             </div>
@@ -221,11 +219,12 @@ const file_base645 = ref("");// other picture 3
                 <div class="lg:w-[35%]">
                     <div class="w-full flex flex-col gap-2 mb-6">
                         <Label class="font-bold" for="govt_id_no">ID No.:</Label>
-                        <Input readonly type="text" name="govt_id_no" placeholder="ex. 90784389734789" v-model="form.govt_id_no"/>
+                        <Input readonly type="text" name="govt_id_no" placeholder="ex. 90784389734789"
+                            v-model="form.govt_id_no" />
                     </div>
                     <div class="w-full flex flex-col gap-2 mb-6">
                         <Label class="font-bold" for="govt_id_type">ID Type</Label>
-                        <Input readonly type="text" name="govt_id_type" v-model="form.govt_id_type"/>
+                        <Input readonly type="text" name="govt_id_type" v-model="form.govt_id_type" />
                     </div>
                 </div>
             </div>
@@ -233,9 +232,8 @@ const file_base645 = ref("");// other picture 3
             <div class="flex flex-col lg:flex-row gap-6">
                 <div class="w-full flex flex-col gap-2 mb-0">
                     <Label class="ont-bold" for="name">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-folder-pen-icon lucide-folder-pen">
                             <path
                                 d="M2 11.5V5a2 2 0 0 1 2-2h3.9c.7 0 1.3.3 1.7.9l.8 1.2c.4.6 1 .9 1.7.9H20a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9.5" />
@@ -246,9 +244,8 @@ const file_base645 = ref("");// other picture 3
                 </div>
                 <div class="w-full flex flex-col gap-2 mb-0">
                     <Label class="font-bold" for="address">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-map-pin-house-icon lucide-map-pin-house">
                             <path
                                 d="M15 22a1 1 0 0 1-1-1v-4a1 1 0 0 1 .445-.832l3-2a1 1 0 0 1 1.11 0l3 2A1 1 0 0 1 22 17v4a1 1 0 0 1-1 1z" />
@@ -257,38 +254,38 @@ const file_base645 = ref("");// other picture 3
                             <circle cx="10" cy="10" r="3" />
                         </svg>Address</Label>
                     <Input readonly type="text" placeholder="ex. McArthur Park, Beverly Hills, Samar, Philipines"
-                        name="address" v-model="form.address"/>
+                        name="address" v-model="form.address" />
                 </div>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-6">
                 <div class="w-full flex flex-col gap-2 mb-0">
                     <Label class="ont-bold" for="account_number">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-circle-user-round-icon lucide-circle-user-round">
                             <path d="M17.925 20.056a6 6 0 0 0-11.851.001" />
                             <circle cx="12" cy="11" r="4" />
                             <circle cx="12" cy="12" r="10" />
                         </svg>Coop Account Number</Label>
-                    <Input readonly type="text" placeholder="ex. 4564765745" name="account_number" v-model="form.account_number"/>
+                    <Input readonly type="text" placeholder="ex. 4564765745" name="account_number"
+                        v-model="form.account_number" />
                 </div>
                 <div class="w-full flex flex-col gap-2 mb-0">
                     <Label class="font-bold" for="email_address">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-mail-icon lucide-mail">
                             <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
                             <rect x="2" y="4" width="20" height="16" rx="2" />
                         </svg>Email Address</Label>
-                    <Input readonly type="email" placeholder="ex. myemail@gmail.com" name="email_address" v-model="form.email" />
+                    <Input readonly type="email" placeholder="ex. myemail@gmail.com" name="email_address"
+                        v-model="form.email" />
                 </div>
                 <div class="w-full flex flex-col gap-2 mb-0">
                     <Label class="font-bold" for="phone_number">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-phone-icon lucide-phone">
                             <path
                                 d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
@@ -300,20 +297,21 @@ const file_base645 = ref("");// other picture 3
             <div class="flex flex-col lg:flex-row gap-6">
                 <div class="w-full flex flex-col gap-2 mb-0">
                     <Label class="font-bold" for="birthplace">Birthplace</Label>
-                    <Input readonly type="text" placeholder="ex. Manila, Philippines" name="birthplace" v-model="form.birth_place" />
+                    <Input readonly type="text" placeholder="ex. Manila, Philippines" name="birthplace"
+                        v-model="form.birth_place" />
                 </div>
                 <div class="w-full flex flex-col gap-2 mb-0">
                     <Label class="font-bold" for="birthday">Birthday</Label>
-                    <Input readonly type="date" placeholder="ex. 12/09/1978" name="birthday"  v-model="form.birth_date" />
+                    <Input readonly type="date" placeholder="ex. 12/09/1978" name="birthday"
+                        v-model="form.birth_date" />
                 </div>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-6">
                 <div class="w-full flex flex-col gap-2 mb-0">
                     <Label class="font-bold" for="sex">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-venus-and-mars-icon lucide-venus-and-mars">
                             <path d="M10 20h4" />
                             <path d="M12 16v6" />
@@ -321,13 +319,12 @@ const file_base645 = ref("");// other picture 3
                             <path d="m21 2-5.46 5.46" />
                             <circle cx="12" cy="11" r="5" />
                         </svg>Sex</Label>
-                        <Input readonly type="text" placeholder="ex. Male" name="sex" v-model="form.sex" />
+                    <Input readonly type="text" placeholder="ex. Male" name="sex" v-model="form.sex" />
                 </div>
                 <div class="w-full flex flex-col gap-2 mb-0">
                     <Label class="font-bold" for="marital_status">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-church-icon lucide-church">
                             <path d="M10 9h4" />
                             <path d="M12 7v5" />
@@ -336,7 +333,8 @@ const file_base645 = ref("");// other picture 3
                                 d="m18 9 3.52 2.147a1 1 0 0 1 .48.854V19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6.999a1 1 0 0 1 .48-.854L6 9" />
                             <path d="M6 21V7a1 1 0 0 1 .376-.782l5-3.999a1 1 0 0 1 1.249.001l5 4A1 1 0 0 1 18 7v14" />
                         </svg>Marital Status</Label>
-                        <Input readonly type="text" placeholder="ex. Single" name="marital_status" v-model="form.marital_status" />
+                    <Input readonly type="text" placeholder="ex. Single" name="marital_status"
+                        v-model="form.marital_status" />
                 </div>
             </div>
 
