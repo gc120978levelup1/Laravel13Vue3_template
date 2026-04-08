@@ -318,7 +318,7 @@ const new_item = () => {
                         <td class="p-2">{{ item.id }}</td>
                         <td class="p-2">{{ item.created_at.replace(".000000Z", "").replace("T", " ") }}</td>
                         <td class="p-1 lg:w-50">
-                            <img :src="item.portrait_link" alt="x" width="400" style="object-fit: cover; margin: auto;  width: 500px;" />
+                            <img :src="item.portrait_link" alt="x" width="200" style="object-fit: cover; margin: auto;  width: 200px;" />
                         </td>
                         <td class="p-4">{{ item.name }}</td>
                         <td class="p-4">{{ item.email }} <br> {{ item.phone }}</td>

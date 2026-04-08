@@ -8,21 +8,42 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 //------------------------------------------------------------routed
-import { template, dashboard } from '@/routes';
+//import { template, dashboard } from '@/routes';
+// eslint-disable-next-line vue/no-dupe-keys
+import customer from '@/routes/customer';
 
 //------------------------------------------------------------code starts here
 // access page info such as user
 const page = usePage();
-// replace 'complaint' with real object
+
+// obtain data from webserver, replace 'complaint' with real object
 interface Props {
-    complaint: object,
+    customer: object,
 }
 const props = defineProps<Props>();
 
+// form data
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const form = ref({
-    user_id: page.props.auth.user.email,
-    name: page.props.auth.user.email,
+    account_number: "",
+    email: "",
+    name: "",
+    address: "",
+    phone: "",
+    birth_place: "",
+    birth_date: "",
+    sex: "",
+    marital_status: "",
+    license_image: null,
+    license_id_no: "",
+    license_expity_date: "",
+    govt_id_image: null,
+    govt_id_no: "",
+    govt_id_type: "",
+    portrait_image: null,
+    pic1_image: null,
+    pic2_image: null,
+    pic3_image: null,
 });
 
 onMounted(() => { // invoked when page ready
@@ -31,19 +52,24 @@ onMounted(() => { // invoked when page ready
     const userId = params.get('id');
     console.log("User ID from URL:", userId); // If the URL is /products?category=electronics&sort=price
 
-    form.value = { ...form.value, ...props.complaint }; // merge key:value pair
-    form.value.name = page.props.auth.user.email;
-    console.log("Garry Cacho ", page.props.auth.user.email);
+    form.value = { ...form.value, ...props.customer }; // merge key:value pair
+    //form.value.name = page.props.auth.user.email;
+    console.log("Login User id ", page.props.auth.user.id);
+    console.log("Login User Email ", page.props.auth.user.email);
 });
 
-//---------------------------------------------------------- Prev and Next Page Buttons
+//-------------------------------------------- Prev and Next Page Buttons
 const isDisabled = ref(false)
 const prev_page_loading = ref(false);
 const prev_page = () => {
     prev_page_loading.value = true;
     isDisabled.value = true;
-    const form_payload = useForm(form.value);
-    form_payload.get('destination/previous/page', { 'id': form_payload.id });
+    const form_payload = useForm();
+    form_payload.get(customer.index().url, {
+        //----------------------------------------- force ajax parameters
+        preserveScroll: true,
+        preserveState: true,
+    });
 };
 
 const next_page_loading = ref(false);
@@ -51,22 +77,26 @@ const next_page = () => {
     next_page_loading.value = true;
     isDisabled.value = true;
     const form_payload = useForm(form.value);
-    form_payload.post('destination/next/page', { 'id': form_payload.id });
-};
+    form_payload.post(customer.post().url, {
+        //----------------------------------------- force ajax parameters
+        preserveScroll: true,
+        preserveState: true,
+    });
+}
 
 defineOptions({
     layout: {
         breadcrumbs: [
             {
-                title: 'Template',
-                href: template(),
+                title: 'New Customer',
+                href: customer.create(),
             },
         ],
     },
 });
 
 //--------------------------------------------------------------------------- navigation-menu
-import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from 'lucide-vue-next'
+import { /* CircleCheckIcon,*/ CircleHelpIcon, CircleIcon } from 'lucide-vue-next'
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -80,16 +110,40 @@ import {
 const file_base64 = ref("");
 const file_base641 = ref("");
 const file_base642 = ref("");
+const file_base643 = ref("");
+const file_base644 = ref("");
+const file_base645 = ref("");
 
 const file_change = (data) => { // drivers licnese
     file_base64.value = URL.createObjectURL(data.target.files[0]);
+    form.value.license_image = data.target.files[0];
 }
-const file_change1 = (data) => { // portrait photo
-    file_base641.value = URL.createObjectURL(data.target.files[0]);
-}
+
 const file_change2 = (data) => { // other id
     file_base642.value = URL.createObjectURL(data.target.files[0]);
+    form.value.govt_id_image = data.target.files[0];
 }
+
+const file_change1 = (data) => { // portrait photo
+    file_base641.value = URL.createObjectURL(data.target.files[0]);
+    form.value.portrait_image = data.target.files[0];
+}
+
+const file_change3 = (data) => { // other picture 1
+    file_base643.value = URL.createObjectURL(data.target.files[0]);
+    form.value.pic1_image = data.target.files[0];
+}
+
+const file_change4 = (data) => { // other picture 2
+    file_base644.value = URL.createObjectURL(data.target.files[0]);
+    form.value.pic2_image = data.target.files[0];
+}
+
+const file_change5 = (data) => { // other picture 3
+    file_base645.value = URL.createObjectURL(data.target.files[0]);
+    form.value.pic3_image = data.target.files[0];
+}
+
 //--------------------------------------------------------------------------- dialog
 import {
     Dialog,
@@ -104,22 +158,49 @@ import {
 
 // --------------------------------------------------------------------------- simple-vue-camera
 import SimpleVueCamera from 'simple-vue-camera';
-const camera = ref(null);
+const camera = ref(null);  // drivers licnese
+const camera2 = ref(null); // other id
+const camera1 = ref(null); // portrait photo
+const camera3 = ref(null); // other picture 1
+const camera4 = ref(null); // other picture 2
+const camera5 = ref(null); // other picture 3
 
 const takePhoto = async () => { // drivers license
     const blob = await camera.value?.snapshot();
     file_base64.value = URL.createObjectURL(blob);
-};
-
-const takePhoto1 = async () => { // portrait photo
-    const blob = await camera.value?.snapshot();
-    file_base641.value = URL.createObjectURL(blob);
+    form.value.license_image = new File([blob], "myimage12345-0.png", { type: blob.type, lastModified: Date.now() });
 };
 
 const takePhoto2 = async () => { // other id
-    const blob = await camera.value?.snapshot();
+    const blob = await camera2.value?.snapshot();
     file_base642.value = URL.createObjectURL(blob);
+    form.value.govt_id_image = new File([blob], "myimage12345-1.png", { type: blob.type, lastModified: Date.now() });
 };
+
+const takePhoto1 = async () => { // portrait photo
+    const blob = await camera1.value?.snapshot();
+    file_base641.value = URL.createObjectURL(blob);
+    form.value.portrait_image = new File([blob], "myimage12345-2.png", { type: blob.type, lastModified: Date.now() });
+};
+
+const takePhoto3 = async () => { // other picture 1
+    const blob = await camera3.value?.snapshot();
+    file_base643.value = URL.createObjectURL(blob);
+    form.value.pic1_image = new File([blob], "myimage12345-3.png", { type: blob.type, lastModified: Date.now() });
+};
+
+const takePhoto4 = async () => { // other picture 2
+    const blob = await camera4.value?.snapshot();
+    file_base644.value = URL.createObjectURL(blob);
+    form.value.pic2_image = new File([blob], "myimage12345-4.png", { type: blob.type, lastModified: Date.now() });
+};
+
+const takePhoto5 = async () => { // other picture 3
+    const blob = await camera5.value?.snapshot();
+    file_base645.value = URL.createObjectURL(blob);
+    form.value.pic3_image = new File([blob], "myimage12345-5.png", { type: blob.type, lastModified: Date.now() });
+};
+
 // --------------------------------------------------------------------------- declaration of some other refs
 const number1 = ref(50);
 
@@ -127,7 +208,7 @@ const number1 = ref(50);
 
 <template>
 
-    <Head title="Template" />
+    <Head title="customer.create" />
 
     <!-- Main Frame DIV -->
     <div class=" z-0 h-full w-full overflow-auto p-0 m-0 justify-center">
@@ -137,77 +218,20 @@ const number1 = ref(50);
             <NavigationMenu :viewport="false" class="">
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <NavigationMenuTrigger>List</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                            <ul class="grid w-[300px] gap-4">
-                                <li>
-                                    <NavigationMenuLink as-child>
-                                        <a href="#">
-                                            <div class="font-medium">Components</div>
-                                            <div class="text-muted-foreground">
-                                                Browse all components in the library.
-                                            </div>
-                                        </a>
-                                    </NavigationMenuLink>
-                                    <NavigationMenuLink as-child>
-                                        <a href="#">
-                                            <div class="font-medium">Documentation</div>
-                                            <div class="text-muted-foreground">
-                                                Learn how to use the library.
-                                            </div>
-                                        </a>
-                                    </NavigationMenuLink>
-                                    <NavigationMenuLink as-child>
-                                        <a href="#">
-                                            <div class="font-medium">Blog</div>
-                                            <div class="text-muted-foreground">
-                                                Read our latest blog posts.
-                                            </div>
-                                        </a>
-                                    </NavigationMenuLink>
-                                </li>
-                            </ul>
-                        </NavigationMenuContent>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <NavigationMenuTrigger>Simple</NavigationMenuTrigger>
+                        <NavigationMenuTrigger>Go to</NavigationMenuTrigger>
                         <NavigationMenuContent>
                             <ul class="grid w-[200px] gap-4">
                                 <li>
                                     <NavigationMenuLink as-child>
-                                        <a href="#">Components</a>
-                                    </NavigationMenuLink>
-                                    <NavigationMenuLink as-child>
-                                        <a href="#">Documentation</a>
-                                    </NavigationMenuLink>
-                                    <NavigationMenuLink as-child>
-                                        <a href="#">Blocks</a>
-                                    </NavigationMenuLink>
-                                </li>
-                            </ul>
-                        </NavigationMenuContent>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <NavigationMenuTrigger>With Icon</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                            <ul class="grid w-[200px] gap-4">
-                                <li>
-                                    <NavigationMenuLink as-child>
-                                        <a :href="dashboard().url" class="flex-row items-center gap-2">
+                                        <a :href="customer.create().url" class="flex-row items-center gap-2">
                                             <CircleHelpIcon />
-                                            Backlog
+                                            Register New Customer
                                         </a>
                                     </NavigationMenuLink>
                                     <NavigationMenuLink as-child>
-                                        <a href="#" class="flex-row items-center gap-2">
+                                        <a :href="customer.index().url" class="flex-row items-center gap-2">
                                             <CircleIcon />
-                                            To Do
-                                        </a>
-                                    </NavigationMenuLink>
-                                    <NavigationMenuLink as-child>
-                                        <a href="#" class="flex-row items-center gap-2">
-                                            <CircleCheckIcon />
-                                            Done
+                                            List of Customer
                                         </a>
                                     </NavigationMenuLink>
                                 </li>
@@ -225,16 +249,16 @@ const number1 = ref(50);
             <div class="flex flex-row gap-2 p-2 lg:gap-6 lg:p-6 bg w-full justify-center border overflow-hidden">
                 <div
                     class="w-full border-t-8 border-blue-400 dark:border-blue-800 text-blue-400 dark:text-blue-800 text-center p-2 font-bold">
-                    Register
+                    Registration
                 </div>
                 <div class="w-full border-t-4 text-mauve-200 dark:text-mauve-800 text-center">
-                    Billing
+                    View
                 </div>
                 <div class="w-full border-t-4 text-mauve-200 dark:text-mauve-800 text-center">
-                    ISD
+                    Modify
                 </div>
                 <div class="w-full border-t-4 text-mauve-200 dark:text-mauve-800 text-center">
-                    GIS
+                    Customer List
                 </div>
             </div>
 
@@ -258,10 +282,12 @@ const number1 = ref(50);
                 Driver's License
                 <div class="lg:w-[65%] flex flex-col gap-2 mb-0 border-2 rounded-xl min-w-72 overflow-hidden">
                     <div class="flex flex-row h-[10px] item-center">
-                        Brightness<Input type="range" v-model="number1" class="h-[8px]" />
+                        <span class="w-30">Brightness</span>
+                        <Input type="range" v-model="number1" class="h-[8px] mt-2" />
                     </div>
                     <div class="flex flex-row h-[10px] item-center">
-                        Scale<Input type="range" v-model="number2" class="h-[8px]" />
+                        <span class="w-30">Scale</span>
+                        <Input type="range" v-model="number2" class="h-[8px] mt-2" />
                     </div>
                     <img :src="file_base64" alt="x" style="object-fit: cover; margin: auto;  height: 100%;" />
                 </div>
@@ -281,7 +307,6 @@ const number1 = ref(50);
                         <Label class="font-bold" for="marital_status">or</Label>
                         <!-- Take Photo Camera Dialog Start Lincese Photo-->
                         <Dialog>
-
                             <DialogTrigger as-child>
                                 <Button class="active:bg-amber-300 w-[100%]">Obtain from Web Cam</Button>
                             </DialogTrigger>
@@ -318,11 +343,11 @@ const number1 = ref(50);
                     <br>
                     <div class="w-full flex flex-col gap-2 mb-6">
                         <Label class="font-bold" for="license_id">License ID:</Label>
-                        <Input type="text" name="license_id" placeholder="ex. 90784389734789" />
+                        <Input type="text" name="license_id" placeholder="ex. 90784389734789" v-model="form.license_id_no" />
                     </div>
                     <div class="w-full flex flex-col gap-2 mb-6">
                         <Label class="font-bold" for="license_id_expiry_date">License Expiry Date</Label>
-                        <Input type="date" name="license_id_expiry_date" />
+                        <Input type="date" name="license_id_expiry_date" v-model="form.license_expity_date" />
                     </div>
                 </div>
             </div>
@@ -361,7 +386,7 @@ const number1 = ref(50);
                                 </DialogHeader>
                                 <!-- Dialog Body Starts-->
                                 <div class="grid gap-4">
-                                    <simple-vue-camera ref="camera" :width="640" :height="480" image-format="jpeg" />
+                                    <simple-vue-camera ref="camera2" :width="640" :height="480" image-format="jpeg" />
                                 </div>
                                 <!-- Dialog Body Ended -->
                                 <DialogFooter>
@@ -384,19 +409,20 @@ const number1 = ref(50);
                     <br>
                     <br>
                     <div class="w-full flex flex-col gap-2 mb-6">
-                        <Label class="font-bold" for="license_id">ID No.:</Label>
-                        <Input type="text" name="license_id" placeholder="ex. 90784389734789" />
+                        <Label class="font-bold" for="govt_id_no">ID No.:</Label>
+                        <Input type="text" name="govt_id_no" placeholder="ex. 90784389734789" v-model="form.govt_id_no"/>
                     </div>
                     <div class="w-full flex flex-col gap-2 mb-6">
-                        <Label class="font-bold" for="license_id_expiry_date">ID Type</Label>
-                        <Input type="text" name="id_type" />
+                        <Label class="font-bold" for="govt_id_type">ID Type</Label>
+                        <Input type="text" name="govt_id_type" v-model="form.govt_id_type"/>
                     </div>
                 </div>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-6">
                 <div class="w-full flex flex-col gap-2 mb-0">
-                    <Label class="ont-bold" for="name"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    <Label class="ont-bold" for="name">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-folder-pen-icon lucide-folder-pen">
@@ -408,7 +434,8 @@ const number1 = ref(50);
                     <Input type="text" placeholder="ex. Cacho, Garry M." name="name" v-model="form.name" />
                 </div>
                 <div class="w-full flex flex-col gap-2 mb-0">
-                    <Label class="font-bold" for="address"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    <Label class="font-bold" for="address">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-map-pin-house-icon lucide-map-pin-house">
@@ -419,13 +446,14 @@ const number1 = ref(50);
                             <circle cx="10" cy="10" r="3" />
                         </svg>Address</Label>
                     <Input type="text" placeholder="ex. McArthur Park, Beverly Hills, Samar, Philipines"
-                        name="address" />
+                        name="address" v-model="form.address"/>
                 </div>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-6">
                 <div class="w-full flex flex-col gap-2 mb-0">
-                    <Label class="ont-bold" for="account_number"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    <Label class="ont-bold" for="account_number">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-circle-user-round-icon lucide-circle-user-round">
@@ -433,43 +461,46 @@ const number1 = ref(50);
                             <circle cx="12" cy="11" r="4" />
                             <circle cx="12" cy="12" r="10" />
                         </svg>Coop Account Number</Label>
-                    <Input type="text" placeholder="ex. 4564765745" name="account_number" />
+                    <Input type="text" placeholder="ex. 4564765745" name="account_number" v-model="form.account_number"/>
                 </div>
                 <div class="w-full flex flex-col gap-2 mb-0">
-                    <Label class="font-bold" for="email_address"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    <Label class="font-bold" for="email_address">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail">
                             <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
                             <rect x="2" y="4" width="20" height="16" rx="2" />
                         </svg>Email Address</Label>
-                    <Input type="text" placeholder="ex. myemail@gmail.com" name="email_address" />
+                    <Input type="email" placeholder="ex. myemail@gmail.com" name="email_address" v-model="form.email" />
                 </div>
                 <div class="w-full flex flex-col gap-2 mb-0">
-                    <Label class="font-bold" for="email_address"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    <Label class="font-bold" for="phone_number">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-phone-icon lucide-phone">
                             <path
                                 d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
                         </svg>Phone Number</Label>
-                    <Input type="tel" placeholder="ex. 0999737423" name="phone_number" />
+                    <Input type="tel" placeholder="ex. 0999737423" name="phone_number" v-model="form.phone" />
                 </div>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-6">
                 <div class="w-full flex flex-col gap-2 mb-0">
-                    <Label class="font-bold" for="name">Birthplace</Label>
-                    <Input type="text" placeholder="ex. Manila, Philippines" name="birthplace" />
+                    <Label class="font-bold" for="birthplace">Birthplace</Label>
+                    <Input type="text" placeholder="ex. Manila, Philippines" name="birthplace" v-model="form.birth_place" />
                 </div>
                 <div class="w-full flex flex-col gap-2 mb-0">
                     <Label class="font-bold" for="birthday">Birthday</Label>
-                    <Input type="date" placeholder="ex. 12/09/1978" name="birthday" />
+                    <Input type="date" placeholder="ex. 12/09/1978" name="birthday"  v-model="form.birth_date" />
                 </div>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-6">
                 <div class="w-full flex flex-col gap-2 mb-0">
-                    <Label class="font-bold" for="sex"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    <Label class="font-bold" for="sex">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-venus-and-mars-icon lucide-venus-and-mars">
@@ -479,7 +510,7 @@ const number1 = ref(50);
                             <path d="m21 2-5.46 5.46" />
                             <circle cx="12" cy="11" r="5" />
                         </svg>Sex</Label>
-                    <Select name="sex"> <!-- put the v-model in select, ok!-->
+                    <Select name="sex" v-model="form.sex"> <!-- put the v-model in select, ok!-->
                         <SelectTrigger class="w-full">
                             <SelectValue placeholder="ex. Male or Female" />
                         </SelectTrigger>
@@ -494,7 +525,8 @@ const number1 = ref(50);
                     </Select>
                 </div>
                 <div class="w-full flex flex-col gap-2 mb-0">
-                    <Label class="font-bold" for="marital_status"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    <Label class="font-bold" for="marital_status">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-church-icon lucide-church">
@@ -506,7 +538,7 @@ const number1 = ref(50);
                             <path d="M6 21V7a1 1 0 0 1 .376-.782l5-3.999a1 1 0 0 1 1.249.001l5 4A1 1 0 0 1 18 7v14" />
                         </svg>Marital Status</Label>
 
-                    <Select name="marital_status"> <!-- put the v-model in select, ok!-->
+                    <Select name="marital_status" v-model="form.marital_status"> <!-- put the v-model in select, ok!-->
                         <SelectTrigger class="w-full">
                             <SelectValue placeholder="ex. Single, Married, Widower, Widow" />
                         </SelectTrigger>
@@ -561,12 +593,180 @@ const number1 = ref(50);
                                 </DialogHeader>
                                 <!-- Dialog Body Starts-->
                                 <div class="grid gap-4">
-                                    <simple-vue-camera ref="camera" :width="640" :height="480" image-format="jpeg" />
+                                    <simple-vue-camera ref="camera1" :width="640" :height="480" image-format="jpeg" />
                                 </div>
                                 <!-- Dialog Body Ended -->
                                 <DialogFooter>
                                     <DialogClose as-child>
                                         <Button @click="takePhoto1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-camera-icon lucide-camera">
+                                                <path
+                                                    d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z" />
+                                                <circle cx="12" cy="13" r="3" />
+                                            </svg>Take Photo</Button>
+                                    </DialogClose>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                        <!-- Take Photo Camera Dialog Ended Lincese Photo-->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Take Photo 1 -->
+            <div class="flex flex-col lg:flex-row gap-6">
+                Photo 1
+                <div class="lg:w-[65%] flex flex-col gap-2 mb-0 border-2 rounded-xl min-w-72 overflow-hidden">
+                    <img :src="file_base643" alt="x" style="object-fit: cover; margin: auto;  height: 100%;" />
+                </div>
+                <div class="lg:w-[35%]">
+                    <div class="w-full flex flex-col gap-2 mb-0">
+                        <Label class="font-bold" for="marital_status">Upload Picture From File</Label>
+                        <div class="w-full h-10 rounded-lg mb-1 border overflow-hidden">
+                            <Label htmlFor="file_base643"
+                                class="h-full w-full border justify-center flex flex-row text-white bg-black dark:bg-mauve-100 dark:text-black">Select
+                                a file</Label>
+                            <Input id="file_base643" type="file" accept="image/*" name="file_base643"
+                                @change="file_change3" class="hidden" />
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-col gap-2 mb-0">
+                        <Label class="font-bold" for="marital_status">or</Label>
+                        <!-- Take Photo Camera Dialog Start Lincese Photo-->
+                        <Dialog>
+                            <DialogTrigger as-child>
+                                <Button class="active:bg-amber-300 w-[100%]">Obtain from Web Cam</Button>
+                            </DialogTrigger>
+                            <DialogContent class="w-[100%]">
+                                <DialogHeader>
+                                    <DialogTitle>Web Cam</DialogTitle>
+                                    <DialogDescription>
+                                        Take a good look at the camera...
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <!-- Dialog Body Starts-->
+                                <div class="grid gap-4">
+                                    <simple-vue-camera ref="camera3" :width="640" :height="480" image-format="jpeg" />
+                                </div>
+                                <!-- Dialog Body Ended -->
+                                <DialogFooter>
+                                    <DialogClose as-child>
+                                        <Button @click="takePhoto3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-camera-icon lucide-camera">
+                                                <path
+                                                    d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z" />
+                                                <circle cx="12" cy="13" r="3" />
+                                            </svg>Take Photo</Button>
+                                    </DialogClose>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                        <!-- Take Photo Camera Dialog Ended Lincese Photo-->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Take Photo 2 -->
+            <div class="flex flex-col lg:flex-row gap-6">
+                Photo 2
+                <div class="lg:w-[65%] flex flex-col gap-2 mb-0 border-2 rounded-xl min-w-72 overflow-hidden">
+                    <img :src="file_base644" alt="x" style="object-fit: cover; margin: auto;  height: 100%;" />
+                </div>
+                <div class="lg:w-[35%]">
+                    <div class="w-full flex flex-col gap-2 mb-0">
+                        <Label class="font-bold" for="marital_status">Upload Picture From File</Label>
+                        <div class="w-full h-10 rounded-lg mb-1 border overflow-hidden">
+                            <Label htmlFor="file_base644"
+                                class="h-full w-full border justify-center flex flex-row text-white bg-black dark:bg-mauve-100 dark:text-black">Select
+                                a file</Label>
+                            <Input id="file_base644" type="file" accept="image/*" name="file_base644"
+                                @change="file_change4" class="hidden" />
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-col gap-2 mb-0">
+                        <Label class="font-bold" for="marital_status">or</Label>
+                        <!-- Take Photo Camera Dialog Start Lincese Photo-->
+                        <Dialog>
+                            <DialogTrigger as-child>
+                                <Button class="active:bg-amber-300 w-[100%]">Obtain from Web Cam</Button>
+                            </DialogTrigger>
+                            <DialogContent class="w-[100%]">
+                                <DialogHeader>
+                                    <DialogTitle>Web Cam</DialogTitle>
+                                    <DialogDescription>
+                                        Take a good look at the camera...
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <!-- Dialog Body Starts-->
+                                <div class="grid gap-4">
+                                    <simple-vue-camera ref="camera4" :width="640" :height="480" image-format="jpeg" />
+                                </div>
+                                <!-- Dialog Body Ended -->
+                                <DialogFooter>
+                                    <DialogClose as-child>
+                                        <Button @click="takePhoto4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-camera-icon lucide-camera">
+                                                <path
+                                                    d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z" />
+                                                <circle cx="12" cy="13" r="3" />
+                                            </svg>Take Photo</Button>
+                                    </DialogClose>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                        <!-- Take Photo Camera Dialog Ended Lincese Photo-->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Take Photo 3 -->
+            <div class="flex flex-col lg:flex-row gap-6">
+                Photo 3
+                <div class="lg:w-[65%] flex flex-col gap-2 mb-0 border-2 rounded-xl min-w-72 overflow-hidden">
+                    <img :src="file_base645" alt="x" style="object-fit: cover; margin: auto;  height: 100%;" />
+                </div>
+                <div class="lg:w-[35%]">
+                    <div class="w-full flex flex-col gap-2 mb-0">
+                        <Label class="font-bold" for="marital_status">Upload Picture From File</Label>
+                        <div class="w-full h-10 rounded-lg mb-1 border overflow-hidden">
+                            <Label htmlFor="file_base645"
+                                class="h-full w-full border justify-center flex flex-row text-white bg-black dark:bg-mauve-100 dark:text-black">Select
+                                a file</Label>
+                            <Input id="file_base645" type="file" accept="image/*" name="file_base645"
+                                @change="file_change5" class="hidden" />
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-col gap-2 mb-0">
+                        <Label class="font-bold" for="marital_status">or</Label>
+                        <!-- Take Photo Camera Dialog Start Lincese Photo-->
+                        <Dialog>
+                            <DialogTrigger as-child>
+                                <Button class="active:bg-amber-300 w-[100%]">Obtain from Web Cam</Button>
+                            </DialogTrigger>
+                            <DialogContent class="w-[100%]">
+                                <DialogHeader>
+                                    <DialogTitle>Web Cam</DialogTitle>
+                                    <DialogDescription>
+                                        Take a good look at the camera...
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <!-- Dialog Body Starts-->
+                                <div class="grid gap-4">
+                                    <simple-vue-camera ref="camera5" :width="640" :height="480" image-format="jpeg" />
+                                </div>
+                                <!-- Dialog Body Ended -->
+                                <DialogFooter>
+                                    <DialogClose as-child>
+                                        <Button @click="takePhoto5">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round"
@@ -603,7 +803,7 @@ const number1 = ref(50);
                             <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                         </svg>
                     </div>
-                    Prev Page
+                    List Page
                 </Button>
                 <div class="ml-auto"></div>
                 <Button :disabled="isDisabled" class=" cursor-pointer active:bg-amber-200 h-14" @click="next_page">
@@ -614,7 +814,7 @@ const number1 = ref(50);
                             <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                         </svg>
                     </div>
-                    Next Page
+                    Save Page
                     <div v-show="!next_page_loading">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

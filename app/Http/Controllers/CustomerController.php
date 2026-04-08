@@ -162,6 +162,53 @@ class CustomerController extends Controller
         );
     }
 
+    public function update_ajax(UpdateCustomerRequest $request, Customer $customer)
+    {
+        // saving and extracting uploaed picture
+        if ($request->hasFile('license_image')) {
+            $request->merge([
+                // local file upload, VPS
+                'license_link' => config('alphaenvironment.LOCAL_URL') . $request->file('license_image')->store(config('alphaenvironment.SUB_FLDR_IMAGES'), 'public'),
+            ]);
+        }
+        if ($request->hasFile('govt_id_image')) {
+            $request->merge([
+                // local file upload, VPS
+                'govt_id_link' => config('alphaenvironment.LOCAL_URL') . $request->file('govt_id_image')->store(config('alphaenvironment.SUB_FLDR_IMAGES'), 'public'),
+            ]);
+        }
+        if ($request->hasFile('portrait_image')) {
+            $request->merge([
+                // local file upload, VPS
+                'portrait_link' => config('alphaenvironment.LOCAL_URL') . $request->file('portrait_image')->store(config('alphaenvironment.SUB_FLDR_IMAGES'), 'public'),
+            ]);
+        }
+        if ($request->hasFile('pic1_image')) {
+            $request->merge([
+                // local file upload, VPS
+                'pic1_link' => config('alphaenvironment.LOCAL_URL') . $request->file('pic1_image')->store(config('alphaenvironment.SUB_FLDR_IMAGES'), 'public'),
+            ]);
+        }
+        if ($request->hasFile('pic2_image')) {
+            $request->merge([
+                // local file upload, VPS
+                'pic2_link' => config('alphaenvironment.LOCAL_URL') . $request->file('pic2_image')->store(config('alphaenvironment.SUB_FLDR_IMAGES'), 'public'),
+            ]);
+        }
+        if ($request->hasFile('pic3_image')) {
+            $request->merge([
+                // local file upload, VPS
+                'pic3_link' => config('alphaenvironment.LOCAL_URL') . $request->file('pic3_image')->store(config('alphaenvironment.SUB_FLDR_IMAGES'), 'public'),
+            ]);
+        }
+        $customer->update($request->all());
+        return redirect()->route(
+            'customer.edit',
+            [
+                'customer' => $customer
+            ]
+        );
+    }
     /**
      * Remove the specified resource from storage.
      */
