@@ -7,6 +7,18 @@ Route::inertia('/', 'Welcome', [
     'canRegister' => Features::enabled(Features::registration()),
 ])->name('home');
 
+use App\Http\Controllers\Auth\GoogleController;
+Route::get('login/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('login/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+use App\Http\Controllers\Auth\FacebookController;
+Route::get('login/facebook', [FacebookController::class, 'redirectToFacebook'])->name('facebook.login');
+Route::get('login/facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
+
+use App\Http\Controllers\Auth\LinkedInController;
+Route::get('login/linkedin', [LinkedInController::class, 'redirectToLinkedIn'])->name('linkedin.login');
+Route::get('login/linkedin/callback', [LinkedInController::class, 'handleLinkedInCallback']);
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'Dashboard')->name('dashboard');
 });
@@ -39,6 +51,11 @@ Route::middleware('auth')->group(function () {
   Route::post('/customer/{customer}/update', [CustomerController::class, 'update'])->name('customer.update');
   Route::post('/customer/{customer}/update_ajax', [CustomerController::class, 'update_ajax'])->name('customer.update_ajax');
   Route::get ('/customer/{customer}/show', [CustomerController::class, 'show'])->name('customer.show');
+});
+
+use App\Http\Controllers\FaceRecognitionController;
+Route::middleware('auth')->group(function () {
+  Route::get ('/face_recognition', [FaceRecognitionController::class, 'index'])->name('face_recognition.index');
 });
 
 require __DIR__.'/settings.php';
