@@ -9,6 +9,24 @@ ________________________________________________________
 
 ________________________________________________________
 
+### Railway.com (Sign-in Using Github)
+
+(Dashboard)[https://railway.com/project/b190df8f-22c6-4a45-b2cb-c5621c2c6d8a?]
+
+(Webapp)[https://cebeco2.up.railway.app]
+
+________________________________________________________
+
+### Socialite OAuth 2.0 Login Dashboard Settings
+
+(linkedin-openid)[https://www.linkedin.com/developers/apps/231546114/settings]
+
+(google)[https://console.cloud.google.com/apis/credentials?project=cebeco2]
+
+(facebook)[https://developers.facebook.com/apps/4192158944448283]
+
+________________________________________________________
+
 ### Clone this project
 ```sh
 git clone --recursive https://github.com/gc120978levelup1/Laravel13Vue3_template.git
