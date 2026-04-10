@@ -10,6 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        Schema::dropIfExists('complaints');
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
             $table->string('accountnumber')->unique();
