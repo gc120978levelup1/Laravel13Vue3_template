@@ -58,6 +58,7 @@
         "vue-input-otp": "^0.3.2",
         "vue-sonner": "^2.0.9",
         "vue3-barcode-qrcode-reader": "^1.0.16",
+        "vue3-face-recog": "^0.0.11",
         "vue3-ocr-ph-driver-license-parser": "^0.0.2"
     },
     "optionalDependencies": {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { Users, BookOpen, FolderGit2, LayoutGrid, BookDashed, Command, MapPinned } from 'lucide-vue-next';
+import { ScanFace, Users, BookOpen, FolderGit2, LayoutGrid, BookDashed, Command, MapPinned } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -17,7 +17,9 @@ import {
 import { dashboard, template } from '@/routes';
 import complaint from '@/routes/complaint';
 import customer from '@/routes/customer';
+import face_recognition from '@/routes/face_recognition';
 import map from '@/routes/map';
+
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -45,6 +47,11 @@ const mainNavItems: NavItem[] = [
         title: 'Customer',
         href: customer.index(),
         icon: Users,
+    },
+    {
+        title: 'Face Recognition',
+        href: face_recognition.index(),
+        icon: ScanFace,
     },
 ];
 
