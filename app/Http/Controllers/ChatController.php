@@ -2,23 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use OpenAI\Laravel\Facades\OpenAI;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
+
 class ChatController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request["message"]) {
-            $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/responses', [
-                'model' => 'gpt-5.3',
-                'input' => $request["message"],
+        if ($request->filled('message')) {
+            $response = Http::withToken(env('OPENAI_API_KEY'))
+                ->acceptJson()
+                ->post('https://api.openai.com/v1/responses', [
+                    'model' => 'gpt-5.3',
+                    'input' => $request->message,
+                ]);
+
+            $data = $response->json();
+
+            $text = $data['output'][0]['content'][0]['text'] ?? null;
+
+            return Inertia::render('viewjs/complaint/index', [
+                'response' => $text,
             ]);
-        }
-        return Inertia::render('viewjs/chat/index', [
-            'response' => $request["response"]
-        ]); // Renders the Vue component
+        } else
+            return Inertia::render('viewjs/chat/index'); // Renders the Vue component
     }
 
     public function sendMessage(Request $request)
