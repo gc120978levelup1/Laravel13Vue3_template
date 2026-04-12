@@ -24,7 +24,7 @@ class ChatController extends Controller
             $text = $data['output'][0]['content'][0]['text'] ?? null;
 
             return Inertia::render('viewjs/complaint/index', [
-                'response' => $text,
+                'response' => $response->json(),
             ]);
         } else
             return Inertia::render('viewjs/chat/index'); // Renders the Vue component
