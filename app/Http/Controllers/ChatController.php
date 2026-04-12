@@ -10,6 +10,12 @@ class ChatController extends Controller
 {
     public function index(Request $request)
     {
+        if ($request["message"]) {
+            $response = Http::withToken(env('OPENAI_API_KEY'))->post('https://api.openai.com/v1/responses', [
+                'model' => 'gpt-5.3',
+                'input' => $request["message"],
+            ]);
+        }
         return Inertia::render('viewjs/chat/index', [
             'response' => $request["response"]
         ]); // Renders the Vue component

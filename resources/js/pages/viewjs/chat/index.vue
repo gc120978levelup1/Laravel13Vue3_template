@@ -63,13 +63,13 @@ const next_page = () => {
     next_page_loading.value = true;
     isDisabled.value = true;
     const form_payload = useForm(form.value);
-    form_payload.post(chat.send().url, {
+    form_payload.get(chat.index().url, {
         //----------------------------------------- force ajax parameters
         preserveScroll: true,
         preserveState: true,
         onSuccess: () => {
             // envoke data management
-            console.log("response: ", props.response);
+            console.log("response: ",props.response);
         },
     });
 }
