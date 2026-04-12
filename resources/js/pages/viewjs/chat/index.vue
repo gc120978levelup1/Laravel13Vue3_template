@@ -67,6 +67,10 @@ const next_page = () => {
         //----------------------------------------- force ajax parameters
         preserveScroll: true,
         preserveState: true,
+        onSuccess: () => {
+            // envoke data management
+            console.log("response: ", props.response);
+        },
     });
 }
 
