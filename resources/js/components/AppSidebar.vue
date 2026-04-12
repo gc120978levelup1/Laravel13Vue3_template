@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { ScanFace, Users, BookOpen, FolderGit2, LayoutGrid, BookDashed, Command, MapPinned } from 'lucide-vue-next';
+import { BotMessageSquare, ScanFace, Users, BookOpen, FolderGit2, LayoutGrid, BookDashed, Command, MapPinned } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -15,6 +15,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard, template } from '@/routes';
+import chat from '@/routes/chat';
 import complaint from '@/routes/complaint';
 import customer from '@/routes/customer';
 import face_recognition from '@/routes/face_recognition';
@@ -52,6 +53,11 @@ const mainNavItems: NavItem[] = [
         title: 'Face Recognition',
         href: face_recognition.index(),
         icon: ScanFace,
+    },
+    {
+        title: 'Chat Us',
+        href: chat.index(),
+        icon: BotMessageSquare,
     },
 ];
 
