@@ -27,14 +27,14 @@ class ChatController extends Controller
         //]);
 
 
-        return redirect()->route(
-            'chat.index',[
-                'response' => $request["message"]//$response['output'][0]['content'][0]['text'] ?? 'No response'
-            ]
-        );
-        //return response()->json([
-        //    'response' => $response
-        //]);
+        //return redirect()->route(
+        //    'chat.index',[
+        //        'response' => $request["message"]//$response['output'][0]['content'][0]['text'] ?? 'No response'
+        //    ]
+        //);
+        return response()->json([
+            'response' => $response
+        ]);
     }
 
 }
