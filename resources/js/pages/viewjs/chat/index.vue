@@ -69,7 +69,7 @@ const next_page = () => {
         preserveState: true,
         onSuccess: () => {
             // envoke data management
-            console.log("response: ",props.response);
+            // console.log("response: ",props.response);
         },
     });
 }
