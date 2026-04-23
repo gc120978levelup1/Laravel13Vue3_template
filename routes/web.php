@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/customer/{customer}/update', [CustomerController::class, 'update'])->name('customer.update');
     Route::post('/customer/{customer}/update_ajax', [CustomerController::class, 'update_ajax'])->name('customer.update_ajax');
     Route::get('/customer/{customer}/show', [CustomerController::class, 'show'])->name('customer.show');
+    Route::post('/customer/scan_id_using_ai', [CustomerController::class, 'scan_id_using_ai'])->name('customer.scan_id_using_ai');
 });
 
 use App\Http\Controllers\FaceRecognitionController;
@@ -61,7 +62,35 @@ Route::middleware('auth')->group(function () {
 use App\Http\Controllers\ChatController;
 Route::middleware('auth')->group(function () {
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
-    Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+    Route::get('/chat/automation', [ChatController::class, 'index_automation'])->name('chat.index_automation');
+});
+
+use App\Http\Controllers\ChatbotController;
+Route::middleware('auth')->group(function () {
+    Route::get('/chatbot', [ChatbotController::class, 'index'])->name('chatbot.index');
+    Route::get('/chatbot/create', [ChatbotController::class, 'create'])->name('chatbot.create');
+    Route::get('/chatbot/{chatbot}/show', [ChatbotController::class, 'show'])->name('chatbot.show');
+    Route::get('/chatbot/{chatbot}/edit', [ChatbotController::class, 'edit'])->name('chatbot.edit');
+    Route::post('/chatbot/post1', [ChatbotController::class, 'store1'])->name('chatbot.post1');
+    Route::post('/chatbot/post2', [ChatbotController::class, 'store2'])->name('chatbot.post2');
+    Route::post('/chatbot/{chatbot}/update', [ChatbotController::class, 'update'])->name('chatbot.update');
+    Route::post('/chatbot/send_to_ai1', [ChatbotController::class, 'send_to_ai1'])->name('chatbot.send_to_ai1');
+    Route::post('/chatbot/{chatbot}/send_to_ai2', [ChatbotController::class, 'send_to_ai2'])->name('chatbot.send_to_ai2');
+    Route::post('/chatbot/send_to_ai3', [ChatbotController::class, 'send_to_ai3'])->name('chatbot.send_to_ai3');
+});
+
+use App\Http\Controllers\AIChatController;
+Route::middleware('auth')->group(function () {
+    Route::get('/aichat', [AIChatController::class, 'index'])->name('aichat.index');
+    Route::get('/aichat/create', [AIChatController::class, 'create'])->name('aichat.create');
+    Route::get('/aichat/{aichat}/show', [AIChatController::class, 'show'])->name('aichat.show');
+    Route::get('/aichat/{aichat}/edit', [AIChatController::class, 'edit'])->name('aichat.edit');
+    Route::post('/aichat/post1', [AIChatController::class, 'store1'])->name('aichat.post1');
+    Route::post('/aichat/post2', [AIChatController::class, 'store2'])->name('aichat.post2');
+    Route::post('/aichat/{aichat}/update', [AIChatController::class, 'update'])->name('aichat.update');
+    Route::post('/aichat/send_to_ai1', [AIChatController::class, 'send_to_ai1'])->name('aichat.send_to_ai1');
+    Route::post('/aichat/{aichat}/send_to_ai2', [AIChatController::class, 'send_to_ai2'])->name('aichat.send_to_ai2');
+    Route::post('/aichat/send_to_ai3', [AIChatController::class, 'send_to_ai3'])->name('aichat.send_to_ai3');
 });
 
 require __DIR__ . '/settings.php';
